@@ -1,0 +1,70 @@
+/*******************************************************************************
+ * Copyright 2012-2013 Trento RISE
+ * 
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ * 
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ ******************************************************************************/
+package eu.trentorise.smartcampus.domain.fb.events;
+
+import it.sayservice.platform.compiler.domain.model.annotations.ServiceNotification;
+import it.sayservice.platform.compiler.domain.model.annotations.Subscription;
+import it.sayservice.platform.compiler.domain.model.annotations.Local;
+import it.sayservice.platform.compiler.domain.model.annotations.Process;
+
+import eu.trentorise.smartcampus.domain.fb.events.converter.FBEvent;
+import eu.trentorise.smartcampus.domain.discovertrento.EventService;
+import eu.trentorise.smartcampus.domain.discovertrento.GenericEvent;
+import eu.trentorise.smartcampus.domain.discovertrento.POIService;
+import eu.trentorise.smartcampus.domain.discovertrento.GenericPOI;
+
+import eu.trentorise.smartcampus.domain.fb.events.scripts.FBEventsScript;
+
+
+DomainObject FBEventsService {
+    
+    @ServiceNotification(serviceId="eu.trentorise.smartcampus.services.fb.events.FacebookEvents", methodName="GetEvents", converter="eu.trentorise.smartcampus.domain.fb.events.converter.FBEventsDataConverter")
+    port update(data : FBEvent[]);
+
+    @Subscription(serviceId="eu.trentorise.smartcampus.services.fb.events.FacebookEvents", methodName="GetEvents")
+    operation subscribeFBEvents(source:String,token:String,overrideLocation:String);       
+    
+    action initialize() {
+        invoke subscribeFBEvents("186571888043189","access_token","");
+        invoke subscribeFBEvents("104262469606265","access_token","");
+        invoke subscribeFBEvents("137453049665487","access_token","");
+        invoke subscribeFBEvents("172033196275003","access_token","");
+        invoke subscribeFBEvents("280474468734649","access_token","");
+        invoke subscribeFBEvents("455189081197963","access_token",".*FBK.*=FBK");  
+    }
+}
+
+DomainObject FBGenericEventService implements EventService {
+
+	action forwardEvents(data : FBEvent[]) {
+		publish update(FBEventsScript.extractEvents(data));
+	}
+
+	subscribe FBEventsService!update() => forwardEvents(data);
+
+}
+
+DomainObject FBGenericPOIService implements POIService {
+
+	action forwardPOIs(data : FBEvent[]) {
+		publish update(FBEventsScript.extractPOIs(data));
+	}
+
+	subscribe FBEventsService!update() => forwardPOIs(data);
+
+}
+
+
