@@ -79,9 +79,8 @@ public class FBEventsDataConverter implements DataConverter {
 		GenericPOI gp = new GenericPOI();
 		gp.setTitle(ev.getLocation());
 		gp.setDescription("");
-		gp.setSource("fb-events");
+		gp.setSource("Facebook");
 		gp.setPoiData(createPOIData(ev));
-		gp.setType("FB Event");
 		gp.setId(encode(ev.getPoi().getPoiId() + "@fb-events"));
 
 		Map<String, Object> map = new TreeMap<String, Object>();
