@@ -72,7 +72,33 @@ public class FBEventsDataConverter implements DataConverter {
 		}
 		ge.setTitle(ev.getName());
 		
+		ge.setType(extractType(ge));
+		
 		return ge;
+	}
+
+	private static String extractType(GenericEvent ge) {
+		String res = checkStringForType(ge.getTitle());
+		if (res != null) return res;
+		return checkStringForType(ge.getDescription());
+	}
+
+	private static String checkStringForType(String in) {
+		if (in == null) return null;
+		String s = in.toLowerCase();
+		if (s.matches(".*((live)|(concert)|(band)|(tribute)|(rock)|(orchestra)|(music)).*")) 
+		{
+			return "Concerts";
+		}
+		if (s.matches(".*((party)|(festa)|(dj)).*"))
+		{
+			return "Parties";
+		}
+		if (s.matches(".*((seminar)|(presentazione)).*"))
+		{
+			return "Seminars";
+		}
+		return null;
 	}
 
 	private GenericPOI extractGenericPOI(Event ev) throws ParseException {
@@ -108,5 +134,4 @@ public class FBEventsDataConverter implements DataConverter {
 	private static String encode(String s) {
 		return new BigInteger(s.getBytes()).toString(s.length());
 	}
-
 }

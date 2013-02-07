@@ -38,12 +38,15 @@ DomainObject FBEventsService {
     operation subscribeFBEvents(source:String,token:String,overrideLocation:String);       
     
     action initialize() {
-        invoke subscribeFBEvents("186571888043189","access_token","");
-        invoke subscribeFBEvents("104262469606265","access_token","");
-        invoke subscribeFBEvents("137453049665487","access_token","");
-        invoke subscribeFBEvents("172033196275003","access_token","");
-        invoke subscribeFBEvents("280474468734649","access_token","");
-        invoke subscribeFBEvents("455189081197963","access_token",".*FBK.*=FBK");  
+        invoke subscribeFBEvents("186571888043189","","");
+        invoke subscribeFBEvents("104262469606265","","");
+        invoke subscribeFBEvents("137453049665487","","");
+        invoke subscribeFBEvents("172033196275003","","");
+        invoke subscribeFBEvents("280474468734649","",".+=Osteria La Scaletta");
+        invoke subscribeFBEvents("455189081197963","",".*FBK.*=FBK");  
+        invoke subscribeFBEvents("177213794630","",".+=Al Porteghet");  
+        invoke subscribeFBEvents("205180512908453","","");  
+        invoke subscribeFBEvents("166397083437529","","");  
     }
 }
 
