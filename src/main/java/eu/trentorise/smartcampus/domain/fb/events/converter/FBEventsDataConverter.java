@@ -6,7 +6,9 @@ import it.sayservice.platform.core.domain.ext.Tuple;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,8 @@ import eu.trentorise.smartcampus.services.fb.events.data.message.Events.Event;
 
 public class FBEventsDataConverter implements DataConverter {
 
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");   
+	
 	@Override
 	public Serializable toMessage(Map<String, Object> parameters) {
 		if (parameters == null)
@@ -64,6 +68,7 @@ public class FBEventsDataConverter implements DataConverter {
 		ge.setSource(ev.getOwner());
 
 		ge.setFromTime(ev.getStartTime());
+		ge.setTiming(sdf.format(new Date(ge.getFromTime())));
 		
 		String s = ev.getName() + "; " + ev.getLocation() + "; " + ev.getStartTime();
 		ge.setId(encode(s));
