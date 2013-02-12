@@ -73,7 +73,7 @@ public class FBEventsDataConverter implements DataConverter {
 		String s = ev.getName() + "; " + ev.getLocation() + "; " + ev.getStartTime();
 		ge.setId(encode(s));
 		if (ev.hasPoi()) {
-			ge.setPoiId(encode(ev.getPoi().getPoiId() + "@fb-events"));
+			ge.setPoiId(ev.getPoi().getPoiId());
 		}
 		ge.setTitle(ev.getName());
 		
@@ -112,7 +112,7 @@ public class FBEventsDataConverter implements DataConverter {
 		gp.setDescription("");
 		gp.setSource("Facebook");
 		gp.setPoiData(createPOIData(ev));
-		gp.setId(encode(ev.getPoi().getPoiId() + "@fb-events"));
+		gp.setId(ev.getPoi().getPoiId());
 
 		Map<String, Object> map = new TreeMap<String, Object>();
 		map.put("id", ev.getId());
