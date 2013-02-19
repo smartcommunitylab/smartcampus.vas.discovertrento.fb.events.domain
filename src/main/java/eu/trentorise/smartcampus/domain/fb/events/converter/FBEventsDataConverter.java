@@ -99,7 +99,7 @@ public class FBEventsDataConverter implements DataConverter {
 		{
 			return "Parties";
 		}
-		if (s.matches(".*((seminar)|(presentazione)).*"))
+		if (s.matches(".*((seminar)|(libro)|(lettura)).*"))
 		{
 			return "Seminars";
 		}
