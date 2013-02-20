@@ -59,15 +59,3 @@ DomainObject FBGenericEventService implements EventService {
 	subscribe FBEventsService!update() => forwardEvents(data);
 
 }
-
-DomainObject FBGenericPOIService implements POIService {
-
-	action forwardPOIs(data : FBEvent[]) {
-		publish update(FBEventsScript.extractPOIs(data));
-	}
-
-	subscribe FBEventsService!update() => forwardPOIs(data);
-
-}
-
-
