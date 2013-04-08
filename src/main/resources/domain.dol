@@ -47,6 +47,7 @@ DomainObject FBEventsService {
         invoke subscribeFBEvents("177213794630","",".+=Al Porteghet");  
         invoke subscribeFBEvents("205180512908453","","");  
         invoke subscribeFBEvents("166397083437529","","");  
+        invoke subscribeFBEvents("123431114443175","","");
     }
 }
 
